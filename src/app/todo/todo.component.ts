@@ -18,6 +18,10 @@ export class TodoComponent implements OnInit {
     addForm.resetForm();
   }
 
+  handleRemove(t:string){
+    this.tasks = this.tasks.filter((task) => task != t);
+  }
+
   ngOnInit(): void {
   }
 
