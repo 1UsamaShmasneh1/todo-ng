@@ -7,6 +7,17 @@
     <input type="text" ngModel name="task">
     <button tybe="submit">Add Task</button>
 </form>
+<hr>
+
+<button (click)="handleSave()">Save All</button>
+
+<hr>
+<div>
+    <label for="search">
+        Search:
+        <input type="text" #searchText (keyup)="handleSearch(searchText.value)">
+    </label>
+</div>
 
 <hr>
 <h3>Your Tasks: </h3>
@@ -20,18 +31,22 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>Tasks</td>
+            <td>
+                Tasks
+                <button class="sortButton" [class.isSorted]="sort == SortEnum.ASC" (click)="handleSort(SortEnum.ASC)">&uarr;</button>
+                <button class="sortButton" [class.isSorted]="sort == SortEnum.DESC" (click)="handleSort(SortEnum.DESC)">&#8595;</button>
+            </td>
             <td>Operations</td>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let t of tasks">
+        <tr *ngFor="let t of tasks" [hidden]="!t.isVisible">
             <td>
                 <span *ngIf="!t.isUpdated">
                     {{t.name}}
                 </span>
                 <span *ngIf="t.isUpdated">
-                    <input type="text" name="newTask" #newTask>
+                    <input type="text" name="newTask" #newTask value="{{t.name}}">
                     <button type="submit" (click)="handleFinishUpdate(t.name,newTask.value)">Check</button>
                 </span>
             </td>
